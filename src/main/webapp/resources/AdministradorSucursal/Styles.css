@@ -1,0 +1,41 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 3/09/2026, 12:53:57 p. m.
+    Author     : mario
+*/
+#header {
+    background-color: #009999;
+    display: flex;
+    padding: 40px;
+    align-items: center;
+}
+
+.botton {
+    width: 100px;
+    height: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #009999;
+    cursor: pointer;
+    letter-spacing: 1px;
+    border: none;
+    font-weight: 600;
+    color: white;
+}
+
+
+#nombreUsuario {
+    font-family: "Lucida Console", "Courier New", monospace;
+    margin-left: auto;
+    background-color: #009999;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: none;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 1px;
+
+}
