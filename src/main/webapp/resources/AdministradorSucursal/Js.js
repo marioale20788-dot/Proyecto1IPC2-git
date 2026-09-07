@@ -5,11 +5,7 @@
 
 
 function adminsitrarBuses(){
-    fetch('../AdministradorSucursal/AdministradorSucursalVista.jsp')  
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('requestResultado').innerHTML = html;
-        });
+  
 }
 function administrarChoferes(){
     

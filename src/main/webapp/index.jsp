@@ -16,7 +16,7 @@
     <body>
         <h1 id="tituloInicio">ADMINISTRADOR DE BUSES</h1>
         <br>
-        
+       
         <div id="iniciarSesion" class="centrar"> INICIAR SESION
             <br>
             <label id="labelDpi">DPI: </label>
@@ -26,7 +26,7 @@
             <input type="text" class="ingresarTexto", id ="textTipo"/>
             <br>
             <button type="button" onclick="buscarUsuario()">ACEPTAR</button>
-            <a href="AdministradorSucursal/headerAdminSucursal.jsp">admin sucursal</a>
+            <a href="AdministradorSucursal/Inicio.jsp">admin sucursal</a>
         </div>
 
     </body>
