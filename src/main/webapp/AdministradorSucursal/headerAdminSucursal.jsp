@@ -15,21 +15,29 @@
     </head>
     <body>
         <header>
+         
             <div id ="header">
+                <label class ="labelUs"> nombre Usuario</label>
+
+                <label class="labelUs">nombre sucursal </label>
+                <form id ="inicio" method="GET" action="../AdministradorSucursal/Inicio.jsp">
+                    <button class="botton" type="submit">INICIO</button>
+                </form>
+
+
+
                 <button id ="administrarBuses" class="botton"type ="button"onclick="adminsitrarBuses()"> BUSES </button>
                 <button id ="adminitrarChoferes"class="botton"type ="button"onclick="administrarChoferes()"> CHOFERES </button>
                 <button id ="administrarRutas"type ="button"class="botton"onclick="administrarRutas()()()"> RUTAS </button>
                 <button id ="administrarViajes"type ="button"class="botton"onclick="adminsitrarViajes()()"> VIAJES </button>
                 <button id ="administrarTaller"type ="button"class="botton"onclick="adminsitrarTaller()()">TALLER</button>
                 <button id ="administrarReportes"type ="button"class="botton"onclick="adminsitrarReportes()()">REPORTES</button>
-                <div id ="nombreUsuario">
-                    <label id ="labelUsuario"> nombre Usuario</label>
-                    <br>
-                    <label id="sucursal">nombre sucursal </label>
-                    
-                </div>
+
             </div>
+
+
+
         </header>
-        <div id ="requestResultado"></div>
+
     </body>
 </html>
