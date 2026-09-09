@@ -1,0 +1,96 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package AdministradorSucursal;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author mario
+ */
+public class BusJdbc {
+
+    private Connection connection;
+    private Bus bus;
+
+    public BusJdbc(Connection conn, Bus bus) {
+        this.connection = conn;
+        this.bus = bus;
+    }
+
+    public String CrearNuevoBus() {
+        String sql = "INSERT INTO buses(numero_placa,marca,modelo,foto,fabricacion,kilometraje_actual,capacidad_pasajeros,estado_operativo,id_sucursal)"
+                + "values(?,?,?,?,?,?,?,?,?) ";
+        try {
+            PreparedStatement insertStatement = connection.prepareStatement(sql);
+            insertStatement.setString(1, bus.getNumeroPlaca());
+            insertStatement.setString(2, bus.getMarca());
+            insertStatement.setString(3, bus.getModelo());
+            insertStatement.setString(4, bus.getFoto());
+            insertStatement.setInt(5, bus.getFechaDeFabricacion());
+            insertStatement.setDouble(6, bus.getKilometrajeActual());
+            insertStatement.setInt(7, bus.getCapacidadPasajeros());
+            insertStatement.setBoolean(8, bus.isEstado());
+            insertStatement.setString(9, bus.getIdSucursalAsociada());
+            String correcto = String.valueOf(insertStatement.executeUpdate());
+            return correcto;
+
+        } catch (SQLException ex) {
+            String error = ex.getMessage();
+
+            switch (ex.getErrorCode()) {
+                case 1452:
+                    error = "La sucursal seleccionada no existe o no es válida";
+                    break;
+
+                case 1062:
+                    error = "El número de placa ingresado ya se encuentra registrado.";
+                    break;
+
+                default:
+                    error = "Ocurrió un inconveniente al guardar los datos. Intenta nuevamente más tarde.";
+                    break;
+            }
+            return error;
+
+        }
+
+    }
+
+    public ArrayList<Bus> BuscarBuses(String idSucursal) {
+        String sql = "SELECT * FROM buses WHERE id_sucursal = ?";
+          ArrayList<Bus> buses = new ArrayList<>();
+        PreparedStatement qualyStatement;
+        try {
+            qualyStatement = connection.prepareStatement(sql);
+            qualyStatement.setString(1, idSucursal);
+            ResultSet busesBuscados = qualyStatement.executeQuery();
+            while(busesBuscados.next()){
+               String numeroPlaca = busesBuscados.getString("numero_placa");
+               String marca = busesBuscados.getString("marca");
+               String modelo = busesBuscados.getString("modelo");
+               String foto = busesBuscados.getString("foto");
+               int fabricacion = busesBuscados.getInt("fabricacion");
+               double kmActual = busesBuscados.getDouble("kilometraje_actual");
+               int capacidadPasajeros = busesBuscados.getInt("capacidad_pasajeros");
+               boolean estado = busesBuscados.getBoolean("estado_operativo");
+               Bus bus = new Bus(numeroPlaca, modelo, marca, foto, fabricacion, kmActual, capacidadPasajeros, estado, idSucursal);
+               buses.add(bus);
+              
+            }
+            return buses;
+             
+        } catch (SQLException ex) {
+            return null;
+        }
+
+    }
+
+}
