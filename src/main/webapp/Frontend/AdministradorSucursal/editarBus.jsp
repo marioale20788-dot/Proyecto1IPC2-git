@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Inicio
-    Created on : 5/09/2026, 11:25:01 p. m.
+    Document   : editarBus
+    Created on : 7/09/2026, 11:14:15 a. m.
     Author     : mario
 --%>
 
@@ -9,18 +9,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-         <script src="../resources/AdministradorSucursal/Js.js"></script>
-        <link rel="stylesheet" href="../resources/AdministradorSucursal//Styles.css"/>
-                <title>INICIO</title>
+            
+        <title>EDITAR BUS</title>
     </head>
     <body >
-
         <jsp:include page="../AdministradorSucursal/headerAdminSucursal.jsp"/>
         <div id ="contenido">
-                   <h1> Hello World!</h1>
+                 
+            
+            
+            
+            
+            
        
         </div>
- 
-        
     </body>
 </html>

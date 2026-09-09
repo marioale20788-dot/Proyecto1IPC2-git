@@ -26,7 +26,7 @@
             <input type="text" class="ingresarTexto", id ="textTipo"/>
             <br>
             <button type="button" onclick="buscarUsuario()">ACEPTAR</button>
-            <a href="AdministradorSucursal/Inicio.jsp">admin sucursal</a>
+            <a href="Frontend/AdministradorSucursal/Inicio.jsp">admin sucursal</a>
         </div>
 
     </body>
