@@ -4,6 +4,7 @@
  */
 
 var click = true;
+var click2=true;
 
 function adminsitrarBuses(){
     if(click){
@@ -18,6 +19,17 @@ function adminsitrarBuses(){
   
 }
 function administrarChoferes(){
+       if(click2){
+        document.getElementById("crearChofer").setAttribute('style','display: none'); 
+         document.getElementById("buscarChofer").setAttribute('style','display: none'); 
+    }else{
+        document.getElementById("crearChofer").setAttribute('style','display: block'); 
+         document.getElementById("buscarChofer").setAttribute('style','display: block'); 
+    }
+    click2 = !click2;
+    
+    
+
     
 }
 function administrarRutas(){
@@ -35,4 +47,5 @@ function adminsitrarReportes(){
 document.addEventListener("DOMContentLoaded", function() {
     adminsitrarBuses();
      
+     administrarChoferes();
 });
