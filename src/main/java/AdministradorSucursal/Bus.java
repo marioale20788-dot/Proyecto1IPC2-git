@@ -90,8 +90,15 @@ public class Bus {
         this.capacidadPasajeros = capacidadPasajeros;
     }
 
-    public boolean isEstado() {
+    public boolean estado() {
         return estado;
+    }
+    public String getEstado(){
+        if(estado==true){
+            return "Activo";
+        }else{
+            return "Inactivo";
+        }
     }
 
     public void setEstado(boolean estado) {

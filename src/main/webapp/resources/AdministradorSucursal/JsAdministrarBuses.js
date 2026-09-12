@@ -4,6 +4,31 @@
  */
 
 
-function validar(){
-    
+
+
+
+
+function cambiarItem() {
+    var select = document.getElementById("selectItem");
+    var labelAEditar = document.getElementById("itemEditar");
+    var estado = document.getElementById("estadoItem");
+    var input = document.getElementById("inputNuevoItem");
+
+    if (select && labelAEditar && estado) {
+        var textoSeleccionado = select.options[select.selectedIndex].text;
+        labelAEditar.innerText = "Nuevo valor para " + textoSeleccionado + ":";
+        if (textoSeleccionado === "Estado") {
+
+            estado.setAttribute('style', 'display: block');
+            input.setAttribute('style', 'display: none');
+        } else {
+            estado.setAttribute('style', 'display: none');
+            input.setAttribute('style', 'display: block');
+
+        }
+    }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    cambiarItem();
+});

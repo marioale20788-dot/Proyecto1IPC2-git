@@ -9,17 +9,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-                <title>INICIO</title>
+
+        <title>INICIO</title>
+        <jsp:include page="/includes/resources.jsp"/>
     </head>
     <body >
 
-        <jsp:include page="../AdministradorSucursal/headerAdminSucursal.jsp"/>
-        <div class="container" style="margin-left: 220px; padding-top: 20px;">
-                   <h1> Hello World!</h1>
-       
-        </div>
- 
-        
+        <jsp:include page="/includes/headerAdminSucursal.jsp"/>
+        <main>
+            <div class="container" >
+                <h1> Hello World!</h1>
+
+            </div>
+
+
+
+        </main>
+
+
     </body>
 </html>

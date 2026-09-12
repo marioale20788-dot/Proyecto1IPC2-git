@@ -22,34 +22,31 @@ public class Conector {
     public static final String URL = "jdbc:mysql://" + IP + ":" + PUERTO + "/" + SCHEMA;
     private Connection connection;
 
-    public void connect()  {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            System.getLogger(Conector.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+    private static Conector instance;
+
+    private Conector() {
         try {
             connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-        } catch (SQLException ex) {
-            System.getLogger(Conector.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException e) {
+
+            System.out.println("Error al conectarse");
+            e.printStackTrace();
         }
     }
+
+    public static Conector getInstance() {
+        if (instance == null) {
+            instance = new Conector();
+        }
+        return instance;
+    }
+
+   
 
     public java.sql.Connection getConnection() {
         return connection;
     }
 
-    public void close() {
-        if (connection != null) {
-            try {
-                connection.close();
-                System.out.println("🔒 Conexión cerrada.");
-            } catch (SQLException e) {
-                System.err.println("❌ Error al cerrar: " + e.getMessage());
-            }
-        } else {
-            System.out.println("⚠️ No hay conexión que cerrar.");
-        }
-    }
+
 
 }
