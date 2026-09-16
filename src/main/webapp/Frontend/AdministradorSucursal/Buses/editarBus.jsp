@@ -9,6 +9,8 @@
 <%@page import="AdministradorSucursal.Bus"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+  <%@ include file="/includes/FiltroSession.jsp" %>
+  <%@ include file="/includes/FiltroTipoEnEnlaceDirecto.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,17 +23,14 @@
         <main>
             <div class="container mt-5">
                 <div name ="row g-3 align-items-center">
-                    <form  class="row g-3"id ="editarBus" method="GET"action="${pageContext.request.contextPath}/ValidarEntradas/validarBus" >
+                    <form  class="row g-3"id ="editarBus" method="GET"action="${pageContext.request.contextPath}/ValidarEntradas/Bus/validarBus" >
 
                         <div class="col-md-6"> 
 
                             <label class="form-label"> numero de placa </label>
                             <input class ="form-control"name="inputNumeroPlaca" />
                         </div>
-                        <div class="col-md-4"> 
-                            <label class="form-label"> id sucursal</label>
-                            <input class ="form-control"name="inputIdSucursal" />
-                        </div>
+                   
 
                         <div class="col-md-2"> 
                             <label class="form-label"> Realizar busqueda </label>
@@ -48,8 +47,7 @@
                             <div class="container mt-4">
                                 <div class="card shadow-sm border-0 rounded-3">
                                     <div class="card-body p-0 overflow-hidden">
-
-                                        <div class="table-responsive">
+                                        <div class="table-dark">
                                             <table class="table table-hover table-striped align-middle mb-0">
                                                 <thead class="table-dark text-uppercase small"> 
                                                     <tr>
@@ -74,7 +72,7 @@
                                                             <td class="py-3 px-4 fw-bold text-secondary">${Bus.marca}</td>
                                                             <td class="py-3 px-4 fw-bold text-secondary">${Bus.modelo}</td>
                                                             <td class="py-3 px-4 fw-bold text-secondary">
-                                                                <img class="img-thumbnail" src="${Bus.foto}">
+                                                                <img class="img-thumbnail" src="${Bus.foto}"/>
                                                             </td>
                                                             <td class="py-3 px-4 fw-bold text-secondary">${Bus.fechaDeFabricacion}</td>
                                                             <td class="py-3 px-4 fw-bold text-secondary">${Bus.kilometrajeActual}</td>
@@ -82,11 +80,10 @@
                                                             <td class="py-3 px-4 fw-bold text-secondary">${Bus.estado}</td>
                                                             <td class="py-3 px-4 fw-bold text-secondary">${Bus.idSucursalAsociada}</td>
                                                             <td class="py-3 px-4 fw-bold text-secondary">  
-                                                                <form method="GET" class="d-inline" action="${pageContext.request.contextPath}/ValidarEntradas/validarBusEditarBus">
-                                                                    <input type="hidden" name="placa" value="${Bus.numeroPlaca}">
-                                                                    <input type="hidden" name="idSucursal" value="${Bus.idSucursalAsociada}">
-                                                                    <button class="btn btn-primary w-100 mb-2" type="submit">EDITAR</button>
-                                                                </form>
+                                                                <a   class="btn btn-close-white w-100 mb-2"href="${pageContext.request.contextPath}/ValidarEntradas/Bus/validarBusEditarBus?placa=${Bus.numeroPlaca}" 
+                                                                  >
+                                                                    EDITAR
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     </tbody>

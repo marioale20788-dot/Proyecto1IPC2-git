@@ -10,13 +10,16 @@
 <%@page import="AdministradorSucursal.Conector"%>
 <%@page import="AdministradorSucursal.Bus"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+  <%@ include file="/includes/FiltroSession.jsp" %>
+  <%@ include file="/includes/FiltroTipoEnEnlaceDirecto.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CAMBIAR DATOS</title>
-        <script src="${pageContext.request.contextPath}/resources/AdministradorSucursal/JsAdministrarBuses.js?v=1.1"></script>
+           <script src="${pageContext.request.contextPath}/resources/AdministradorSucursal/JsAdministrarBuses.js?v=1.1"></script>
         <jsp:include page="/includes/resources.jsp"/>
+        <title>CAMBIAR DATOS</title>
+     
 
     </head>
     <body >
@@ -33,10 +36,10 @@
                             </c:when>                        
                             <c:when  test="${not empty bus}">
 
-                                <span>DETALLES VEHICULO</span>         
+                                <b>DETALLES VEHICULO</b>         
                                 <div>
                                     <b>Estado:</b> 
-                                    <span class="badge bg-success">${bus.estado}</span>
+                                    <b class="badge bg-success">${bus.estado}</b>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -67,7 +70,7 @@
                                 </div>
                             </div>
                         </div>
-                        <form id ="crearBus" method="POST" action="${pageContext.request.contextPath}/ValidarEntradas/validarBusEditarBus?placaBus=${bus.numeroPlaca}" >
+                        <form method="POST" action="${pageContext.request.contextPath}/ValidarEntradas/Bus/validarBusEditarBus?placaBus=${bus.numeroPlaca}" >
                             <div class="col-12">
                                 <label  class="form-label" > Editar </label>
                                 <select id ="selectItem"class ="form-control"name="itemSeleccionado" onchange="cambiarItem()">

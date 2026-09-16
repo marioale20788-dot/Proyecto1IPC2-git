@@ -20,6 +20,7 @@ public class Bus {
     private int capacidadPasajeros;
     private boolean estado;
     private String idSucursalAsociada;
+    
   
 
     public Bus(String numeroPlaca, String modelo, String marca, String foto, int fechaDeFabricacion, Double kilometrajeActual, int capacidadPasajeros, boolean estado, String idSucursalAsociada) {

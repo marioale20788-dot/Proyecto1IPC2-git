@@ -40,7 +40,7 @@ public class BusJdbc {
             insertStatement.setBoolean(8, bus.estado());
             insertStatement.setString(9, bus.getIdSucursalAsociada());
             String correcto = String.valueOf(insertStatement.executeUpdate());
-            return correcto;
+            return correcto + " bus creado correctamente";
 
         } catch (SQLException ex) {
             return sqlExcepcion(ex);
@@ -54,6 +54,7 @@ public class BusJdbc {
         if (placa != null) {
             sql = sql + " AND numero_placa = ?";
         }
+
         ArrayList<Bus> buses = new ArrayList<>();
         PreparedStatement qualyStatement;
         try {
@@ -79,9 +80,56 @@ public class BusJdbc {
             return buses;
 
         } catch (SQLException ex) {
-            return null;
+            return buses;
         }
 
+    }
+
+    public boolean buscarBusEnViaje(String placa) {
+
+        String sql = "SELECT * FROM viaje WHERE id_bus = ? AND (estado = 'ESPERA' OR estado = 'INICIADO')";
+        try {
+            PreparedStatement qualyStatement = connection.prepareStatement(sql);
+            qualyStatement.setString(1, placa);
+            ResultSet resultado = qualyStatement.executeQuery();
+            return resultado.next();
+        } catch (SQLException ex) {
+            return true;
+        }
+
+    }
+    
+   
+
+    public ArrayList<Bus> BuscarBusesDisponibles(String idSucursal) {
+        String sql = "SELECT * FROM buses WHERE id_sucursal = ? AND estado_operativo = true";
+        ArrayList<Bus> buses = new ArrayList<>();
+        try {
+            PreparedStatement qualyStatement = connection.prepareStatement(sql);
+            qualyStatement.setString(1, idSucursal);
+            ResultSet resultado = qualyStatement.executeQuery();
+            while (resultado.next()) {
+                String placa = resultado.getString("numero_placa");
+                if (buscarBusEnViaje(placa) == false) {
+                    String marca = resultado.getString("marca");
+                    String modelo = resultado.getString("modelo");
+                    String foto = resultado.getString("foto");
+                    int fabricacion = resultado.getInt("fabricacion");
+                    double kmActual = resultado.getDouble("kilometraje_actual");
+                    int capacidadPasajeros = resultado.getInt("capacidad_pasajeros");
+                    boolean estado = resultado.getBoolean("estado_operativo");
+                    Bus bus = new Bus(placa, modelo, marca, foto, fabricacion, kmActual, capacidadPasajeros, estado, idSucursal);
+                    buses.add(bus);
+
+                }
+
+            }
+            return buses;
+
+        } catch (SQLException ex) {
+            System.getLogger(BusJdbc.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return buses;
     }
 
     public String buscarSucursalAsociada(String numeroPlaca) {
@@ -154,6 +202,12 @@ public class BusJdbc {
 
             case 1062:
                 error = "El número de placa ingresado ya se encuentra registrado.";
+                break;
+            case 1292:
+                error = "Formato no valido.";
+                break;
+            case 1406:
+                error = "dato ingresado muy largo.";
                 break;
 
             default:

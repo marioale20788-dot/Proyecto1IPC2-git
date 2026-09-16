@@ -4,6 +4,11 @@
  */
 
 
-function buscarUsuario(){
+function seleccionarSucursal(){
+    
+    var idSucursal = document.getElementById("idSucursal");
+  
+    
+    
     ///buscar
 }

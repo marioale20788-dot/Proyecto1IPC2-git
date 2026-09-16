@@ -5,6 +5,8 @@
 
 var click = true;
 var click2=true;
+var click3=true;
+var click4=true;
 
 function adminsitrarBuses(){
     if(click){
@@ -34,8 +36,43 @@ function administrarChoferes(){
 }
 function administrarRutas(){
     
+    if(click3){
+               document.getElementById("buscarRuta").setAttribute('style','display: none'); 
+        document.getElementById("crearRuta").setAttribute('style','display: none'); 
+    
+       
+    }else{
+         document.getElementById("buscarRuta").setAttribute('style','display: block'); 
+        document.getElementById("crearRuta").setAttribute('style','display: block'); 
+          
+ 
+    }
+    click3 = !click3;
+    
+    
+    
+    
 }
-function adminsitrarViajes(){
+function administrarViajes(){
+    
+    if(click4){
+               document.getElementById("crearViaje").setAttribute('style','display: none'); 
+        document.getElementById("verViaje").setAttribute('style','display: none'); 
+         document.getElementById("viajePrivado").setAttribute('style','display: none'); 
+    
+       
+    }else{
+         document.getElementById("crearViaje").setAttribute('style','display: block'); 
+        document.getElementById("verViaje").setAttribute('style','display: block'); 
+            document.getElementById("viajePrivado").setAttribute('style','display: block'); 
+ 
+    }
+    click4 = !click4;
+    
+    
+    
+    
+    
     
 }
 function adminsitrarTaller(){
@@ -46,6 +83,8 @@ function adminsitrarReportes(){
 } 
 document.addEventListener("DOMContentLoaded", function() {
     adminsitrarBuses();
-     
+     administrarRutas();
      administrarChoferes();
+     
+     administrarViajes();
 });

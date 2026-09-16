@@ -1,39 +1,35 @@
 <%-- 
-    Document   : CrearBus
-    Created on : 7/09/2026, 11:05:44 a. m.
+    Document   : Taller
+    Created on : 16/09/2026, 12:18:47 a. m.
     Author     : mario
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="AdministradorSucursal.Bus"%>
-<%@page import="java.sql.SQLException"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="AdministradorSucursal.Conector" %> 
-<%@ include file="/includes/FiltroSession.jsp" %>
-<%@ include file="/includes/FiltroTipoEnEnlaceDirecto.jsp" %>
+  <%@ include file="/includes/FiltroSession.jsp" %>
+  <%@ include file="/includes/FiltroTipoEnEnlaceDirecto.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <jsp:include page="/includes/resources.jsp"/>
-
-        <title>CREAR BUS</title>
+      <jsp:include page="/includes/resources.jsp"/>
+        <title>INICIO</title>
+  
+        
     </head>
     <body >
+
         <jsp:include page="/includes/headerAdminSucursal.jsp"/>
         <main>
-            <div class ="container mt-5" >
-
-                <div class="card">
+            <div class="container mt-4" >
+                  <div class="card">
                     <div class="card-header bg-black text-white p-3 d-flex justify-content-between align-items-center">
-                        AGREGAR BUS
+                        GASTO TALLER
                     </div>
                     <div class="card-body">
 
                         <form class="row g-3" id ="crearBus" method="POST" action="${pageContext.request.contextPath}/ValidarEntradas/Bus/validarBus">
                             <div class="col-md-6">
-                                <label class="form-label"> Numero de placa </label>
+                                <label class="form-label"> Seleccione bus </label>
                                 <input class ="form-control"name="numeroPlaca"/>
                             </div>
                             <div class="col-md-6">
@@ -84,21 +80,14 @@
 
                     </div>
                 </div>
-                <c:if test="${not empty resultado}">
-
-                    <div class="alert alert-danger"> MENSAJE:${resultado}</div>
-
-                </c:if>
-
-
+               
 
             </div>
 
 
 
-        </div>
+        </main>
 
-    </main>
 
-</body>
+    </body>
 </html>
