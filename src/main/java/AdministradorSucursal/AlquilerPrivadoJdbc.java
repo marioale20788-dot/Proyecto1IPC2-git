@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -36,8 +37,8 @@ public class AlquilerPrivadoJdbc {
             queryStatement.setString(2, idSucursal);
             ResultSet resultado = queryStatement.executeQuery();
             while (resultado.next()) {
-             
-                AlquilerPrivadoObj alquiler = obtenerAlquiler(resultado, idSucursal);
+
+                AlquilerPrivadoObj alquiler = obtenerAlquiler(resultado);
                 privados.add(alquiler);
             }
 
@@ -48,25 +49,114 @@ public class AlquilerPrivadoJdbc {
         }
 
     }
-    
-    
-    public boolean confirmarViajeAlquiler(String idAlquiler){
-        String sql = "UPDATE alquiler_privado SET estadoViaje = 'CREADO' WHERE id_alquiler = ?";
+
+    public String eliminarAlquilerPrivado(String idAlquiler, String idUsuario){
+      String sql = "DELETE FROM alquiler_privado WHERE id_alquiler = ? AND id_cliente = ?";
         try {
             PreparedStatement updateStatement = conn.prepareStatement(sql);
-            updateStatement.setString(1,idAlquiler);
-            int resultado = updateStatement.executeUpdate();
+            updateStatement.setString(1, idAlquiler);
+            updateStatement.setString(2, idUsuario);
+           int i = updateStatement.executeUpdate();
+           return i+" elementos eliminados";
+            
+        } catch (SQLException ex) {
+           return sqlExcepcion(ex);
+        }
+      
+    }
+    
+    public String crearAlquilerPrivado(AlquilerPrivadoObj alquiler) {
+        String sql = "INSERT INTO alquiler_privado ("
+                + "id_alquiler, id_cliente, estado, fecha_salida, fecha_retorno, "
+                + "destino_coordenadas, origen_coordenadas, precio_estimado, "
+                + "id_sucursal, numero_pasajeros, distancia_km, estadoViaje) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement insertStatement = conn.prepareStatement(sql);
+            insertStatement.setString(1, alquiler.getIdAlquilerPrivado());
+            insertStatement.setString(2, alquiler.getIdCliente());
+            insertStatement.setInt(3, 0); 
+            insertStatement.setDate(4, alquiler.getFechaSalida());
+            insertStatement.setDate(5, alquiler.getFechaRetorno());
+            insertStatement.setString(6, alquiler.getDestino());
+            insertStatement.setString(7, alquiler.getOrigen());
+            insertStatement.setDouble(8, alquiler.getPrecioEstimado());
+            insertStatement.setString(9, alquiler.getIdSucursal());
+            insertStatement.setInt(10, alquiler.getPasajeros());
+            insertStatement.setDouble(11, alquiler.getDistancia());
+            insertStatement.setString(12, "ESPERANDO");
+            int resultado = insertStatement.executeUpdate();
             if(resultado==0){
+                return " NO SE PUDO CREAR EL VIAJE";
+            }
+            return " VIAJE SOLICITADO CORRECTAMENTE";
+
+        } catch (SQLException ex) {
+            return sqlExcepcion(ex);
+        }
+
+    }
+    public String confirmarAlquilerPrivado(boolean estado, String idAlquiler,String idCliente){
+        String sql = "UPDATE alquiler_privado SET estado = ? WHERE id_alquiler = ? AND id_cliente = ?";
+        try {
+            PreparedStatement insertStatement = conn.prepareStatement(sql);
+            insertStatement.setBoolean(1, estado);
+            insertStatement.setString(2, idAlquiler);
+            insertStatement.setString(3, idCliente);
+            int i = insertStatement.executeUpdate();
+            if(i==0){
+                return "NO SE PUDO CONFIRMAR EL VIAJE";
+            }
+             return "VIAJE CONFIRMADO";
+        } catch (SQLException ex) {
+            return "NO SE PUDO CONFIRMAR EL VIAJE";
+        }
+        
+        
+    }
+
+    public ArrayList<AlquilerPrivadoObj> alquileresPrivadosClientes(String idCliente, boolean estado) {
+        String sql = "SELECT * FROM alquiler_privado WHERE estado = ? AND id_cliente = ? AND estadoViaje = 'ESPERANDO'";
+        ArrayList<AlquilerPrivadoObj> privados = new ArrayList<>();
+
+        try {
+            PreparedStatement queryStatement = conn.prepareStatement(sql);
+            queryStatement.setBoolean(1, estado);
+            queryStatement.setString(2, idCliente);
+            ResultSet resultado = queryStatement.executeQuery();
+            while (resultado.next()) {
+
+                AlquilerPrivadoObj alquiler = obtenerAlquiler(resultado);
+                privados.add(alquiler);
+            }
+
+            return privados;
+
+        } catch (SQLException ex) {
+            return privados;
+        }
+
+    }
+
+    public boolean confirmarViajeAlquiler(String idAlquiler, String idCliente) {
+        String sql = "UPDATE alquiler_privado SET estadoViaje = 'CREADO' WHERE id_alquiler = ? AND id_cliente = ?";
+        try {
+            PreparedStatement updateStatement = conn.prepareStatement(sql);
+            updateStatement.setString(1, idAlquiler);
+              updateStatement.setString(2, idCliente);
+            int resultado = updateStatement.executeUpdate();
+            if (resultado == 0) {
                 return false;
             }
             return true;
         } catch (SQLException ex) {
-           return false;
+            return false;
         }
-        
+
     }
-    
-    public String caonfirmarPrecioFinal(String idAlquiler, double precioFinal,String idSucursal){
+
+    public String caonfirmarPrecioFinal(String idAlquiler, double precioFinal, String idSucursal) {
         String sql = "UPDATE alquiler_privado SET precio_final = ? WHERE id_alquiler = ? AND id_sucursal = ? ";
         try {
             PreparedStatement updateStatement = conn.prepareStatement(sql);
@@ -74,15 +164,14 @@ public class AlquilerPrivadoJdbc {
             updateStatement.setString(2, idAlquiler);
             updateStatement.setString(3, idSucursal);
             int resultado = updateStatement.executeUpdate();
-            return resultado+" precio a sido confirmado";
+            return resultado + " precio a sido confirmado";
         } catch (SQLException ex) {
             return sqlExcepcion(ex);
         }
-        
-        
+
     }
 
-    public AlquilerPrivadoObj obtenerAlquiler(ResultSet resultado, String idSucursal) throws SQLException {
+    public AlquilerPrivadoObj obtenerAlquiler(ResultSet resultado) throws SQLException {
         AlquilerPrivadoObj alquiler = null;
 
         String idAlquiler = resultado.getString("id_alquiler");
@@ -93,10 +182,11 @@ public class AlquilerPrivadoJdbc {
         String destino = resultado.getString("destino_coordenadas");
         String origen = resultado.getString("origen_coordenadas");
         double precioEstimado = resultado.getDouble("precio_estimado");
-        double precioFinal = resultado.getDouble("precio_final");
+        Double precioFinal = resultado.getDouble("precio_final");
         int pasajeros = resultado.getInt("numero_pasajeros");
         double distancia = resultado.getDouble("distancia_km");
         String estadoViaje = resultado.getString("estadoViaje");
+        String idSucursal = resultado.getString("id_sucursal");
         alquiler = new AlquilerPrivadoObj(idAlquiler, idCliente, estadoAlquiler, salida, llegada, origen, destino,
                 precioEstimado, precioFinal, idSucursal, pasajeros, distancia, estadoViaje);
         return alquiler;
@@ -112,21 +202,52 @@ public class AlquilerPrivadoJdbc {
             queryStatement.setString(2, idSucursal);
             ResultSet resultado = queryStatement.executeQuery();
             while (resultado.next()) {
-               alquiler = obtenerAlquiler(resultado, idSucursal);
-               return alquiler;
+                alquiler = obtenerAlquiler(resultado);
+                return alquiler;
 
             }
             return alquiler;
         } catch (SQLException ex) {
-          return alquiler;
+            return alquiler;
         }
 
     }
-     public String sqlExcepcion(SQLException excepcion) {
+
+    public String generarIdAleatorio() {
+        String sql = "SELECT * FROM alquiler_privado WHERE id_alquiler = ?";
+        boolean codigoNoRepetido = false;
+        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+
+        String codigo = "";
+        while (codigoNoRepetido == false) {
+            codigo = "";
+            for (int i = 0; i < 10; i++) {
+                codigo = codigo + caracteres.charAt(random.nextInt(caracteres.length()));
+            }
+            try {
+                PreparedStatement queryStatement = conn.prepareStatement(sql);
+                queryStatement.setString(1, codigo);
+                ResultSet resultado = queryStatement.executeQuery();
+                if (resultado.next()) {
+                    codigoNoRepetido = false;
+                } else {
+                    codigoNoRepetido = true;
+                }
+            } catch (SQLException ex) {
+
+            }
+
+        }
+
+        return codigo;
+    }
+
+    public String sqlExcepcion(SQLException excepcion) {
         String error;
 
         switch (excepcion.getErrorCode()) {
-               case 1452:
+            case 1452:
                 error = "Un elemento seleccionado no existe o no es válido";
                 break;
 

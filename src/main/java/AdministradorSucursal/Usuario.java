@@ -31,6 +31,7 @@ public class Usuario {
         this.estado = estado;
         this.contrasena = contrasena;
     }
+
     
     
     
@@ -91,7 +92,7 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

@@ -27,60 +27,49 @@
                     </div>
                     <div class="card-body">
 
-                        <form class="row g-3" id ="crearBus" method="POST" action="${pageContext.request.contextPath}/ValidarEntradas/Bus/validarBus">
+                        <form class="row g-3" id ="crearBus" method="POST" action="${pageContext.request.contextPath}/AdministradorSucursal/Taller/validarTaller">
                             <div class="col-md-6">
                                 <label class="form-label"> Seleccione bus </label>
-                                <input class ="form-control"name="numeroPlaca"/>
+                                <select class ="form-control"name="busSeleccionado">
+                                    <c:if test="${not empty buses}">
+                                        <c:forEach items="${buses}" var="Bus">
+                                            
+                                              <option value="${Bus.numeroPlaca}">Placa: ${Bus.numeroPlaca}</option>
+                                   </c:forEach>
+                                        
+                                    </c:if>
+                                  
+                                </select>
                             </div>
                             <div class="col-md-6">
-                                <label  class="form-label" > Marca </label>
-                                <input class ="form-control"name="marca"/>
+                                <label  class="form-label" > Fecha mantenimiento </label>
+                                <input  type="date"class ="form-control"name="fechaMantenimiento"/>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label"  > modelo </label>
-                                <input class ="form-control"name="modelo"/>  
+                                <label class="form-label"  > Monto repuestos </label>
+                                <input class ="form-control"name="montoRepuestos"/>  
                             </div>
                             <div class="col-md-4">
 
-                                <label  class="form-label" > kilometraje actual </label>
-                                <input class ="form-control"name="kilometrajeActual"/>
+                                <label  class="form-label" > Monto mano de obra </label>
+                                <input class ="form-control"name="montoManoDeObra"/>
                             </div>
-                            <div class="col-md-2">
-                                <label  class="form-label"  > fabricacion </label>
-                                <input class ="form-control" name="yearFabricacion"/> 
+                            <div class="col-md-4">
+
+                                <label  class="form-label" > Id recibo </label>
+                                <input class ="form-control"name="idRecibo"/>
                             </div>
-
-
-                            <div class="col-12">
-                                <label  class="form-label" > foto </label>
-                                <input class ="form-control"name="foto"/>
-
-                            </div>
-
-                            <div class="col-12">
-                                <label  class="form-label" > Estado </label>
-                                <select class ="form-control"name="estado">
-                                    <option value="true">activo</option>
-                                    <option value="false">desactivado</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label  class="form-label" > capacidad de pasajeros </label>
-                                <input class ="form-control"name="capacidadPasajeros"/>
-                            </div>
-
+         
                             <br>
-                            <button class="btn btn-dark w-100 mb-2" type="submit" > Crear bus</button>
+                            <button class="btn btn-dark w-100 mb-2" type="submit" > ACEPTAR </button>
                         </form>
-
-
-
-
 
                     </div>
                 </div>
-               
+                        <c:if test="${not empty resultado}">
+                            <div class="alert alert-danger"> ${resultado}</div>
+                        </c:if>
+                            
 
             </div>
 

@@ -55,7 +55,7 @@ public class AlquilerPrivadoLogica {
                 LocalDateTime llegada = alquiler.getFechaRetorno().toLocalDate().atTime(LocalTime.MIN);
                 ViajeObj viaje = new ViajeObj(idNuevoViaje, "PRIVADO", idBus, "ESPERA", salida, llegada, 0.0, idChofer, null, idViajeAlquiler);
                 String resultado = viajeDb.crearViaje(viaje, idSucursal);
-                alquilerDb.confirmarViajeAlquiler(idViajeAlquiler);
+                alquilerDb.confirmarViajeAlquiler(idViajeAlquiler,alquiler.getIdCliente());
                 return resultado;
 
             } else {

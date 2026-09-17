@@ -82,10 +82,10 @@
 
 
                 <c:if test="${not empty viajes}">
-                    <div class="fw-extrabold text-uppercase tracking-wide text-black-gradient mb-3"><b> RESULTADOS </b> </div>
+                    <div class="fw-extrabold text-uppercase text-black-gradient mb-3"><b> RESULTADOS </b> </div>
                     <c:forEach items="${viajes}" var="Viaje">
                         <div class="card">
-                            <div class="card-header bg-black text-white p-3 d-flex justify-content-between align-items-center">
+                            <div class="card-header bg-black text-white p-3 ">
                                 <div> ID Viaje : ${Viaje.idViaje}</div>
                                 <div> Tipo : ${Viaje.tipo}</div>
                             </div>

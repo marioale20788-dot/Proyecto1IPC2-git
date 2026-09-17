@@ -4,6 +4,8 @@
  */
 package AdministradorSucursal;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author mario
@@ -15,6 +17,8 @@ public class Sucursal {
     private double depreciacion;
     private double latitud;
     private double longitud;
+    private ArrayList<Usuario> Administradores;
+     private ArrayList<Usuario> AdministradoresFaltantes;
 
     public Sucursal(String idSucursal, String nombre, double depreciacion, double latitud, double longitud) {
         this.idSucursal = idSucursal;
@@ -24,8 +28,24 @@ public class Sucursal {
         this.longitud = longitud;
     }
 
+    public ArrayList<Usuario> getAdministradores() {
+        return Administradores;
+    }
+
+    public void setAdministradores(ArrayList<Usuario> Administradores) {
+        this.Administradores = Administradores;
+    }
+
     public String getIdSucursal() {
         return idSucursal;
+    }
+
+    public ArrayList<Usuario> getAdministradoresFaltantes() {
+        return AdministradoresFaltantes;
+    }
+
+    public void setAdministradoresFaltantes(ArrayList<Usuario> AdministradoresFaltantes) {
+        this.AdministradoresFaltantes = AdministradoresFaltantes;
     }
 
     public void setIdSucursal(String idSucursal) {

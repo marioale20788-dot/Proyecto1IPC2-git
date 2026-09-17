@@ -81,7 +81,7 @@ public class ViajeLogica {
         BusJdbc bus = new BusJdbc(Conector.getInstance().getConnection(), null);
         ArrayList<Bus> busEnOrgrigen = bus.BuscarBuses(idSucursal, idNuevoBus);
         int boletosVendidos = viaje.boletosVendidos(idViaje);
-        if (boletosVendidos > busEnOrgrigen.get(0).getCapacidadPasajeros()) {
+        if (boletosVendidos > 0) {
             return false;
         }
         return true;
@@ -265,7 +265,7 @@ public class ViajeLogica {
         if (viajeObj == null) {
             return " NO SE PUDO INICIAR EL VIAJE ";
         } else {
-            if (!idBus.trim().equalsIgnoreCase(viajeObj.getIdBus()) && !idChofer.equalsIgnoreCase(viajeObj.getIdChofer())) {
+            if (!idBus.equalsIgnoreCase(viajeObj.getIdBus()) || !idChofer.equalsIgnoreCase(viajeObj.getIdChofer())) {
                 return " NO SE PUDO INICIAR EL VIAJE --- NUMEROS DE PLACA O LICENCIA CHOFER NO COINCIDEN";
             }
         }

@@ -24,13 +24,15 @@
                     <form method="GET" action="${pageContext.request.contextPath}/AdministradorSucursal/Login/validarLogin">
                         <div class="mb-3">
                             <label class="form-label">Usuario</label>
-                            <input type="text" name="nombreUsuario" class="form-control" placeholder="Ingrese su usuario">
+                            <input type="text" name="nombreUsuario" class="form-control" >
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Contraseña</label>
-                            <input name="contrasena" type="password" class="form-control" placeholder="••••••••">
+                            <input name="contrasena" type="password" class="form-control">
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 py-2" >Ingresar</button>
+                        <button type="submit" class="btn btn-dark w-100 mb-2" >Ingresar</button>
+                        
+                        <a class="btn btn-dark w-100 mb-2" href="${pageContext.request.contextPath}/Frontend/CrearUsuario.jsp"> crear una cuenta.....</a>
                         <c:if test="${not empty error}">
                             <b> ${error}</b>
 
@@ -38,6 +40,7 @@
                     </form>
                 </div>
             </div>
+                        
         </div>
 
 

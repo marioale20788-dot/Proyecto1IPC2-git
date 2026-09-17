@@ -43,7 +43,7 @@ public class validarBusLogica {
                 error = error + "- entrada de digito negativa";
             }
 
-        } catch (NumberFormatException e) {
+        } catch (IllegalArgumentException | NullPointerException  e) {
             formatosCorrectos = false;
             error = error + "- formato de digito incorrecta";
         }
@@ -170,7 +170,7 @@ public class validarBusLogica {
                     valorReal = nuevoValor;
                 }
 
-            } catch (NumberFormatException e) {
+            } catch (IllegalArgumentException | NullPointerException  e) {
                 formatosCorrectos = false;
                 error = "El valor ingresado no tiene un formato numérico válido";
             }

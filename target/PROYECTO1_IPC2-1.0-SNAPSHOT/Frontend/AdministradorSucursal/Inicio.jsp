@@ -21,7 +21,7 @@
         <jsp:include page="/includes/headerAdminSucursal.jsp"/>
         <main>
             <div class="container" >
-                <h1> Hello World!</h1>
+            
 
             </div>
 

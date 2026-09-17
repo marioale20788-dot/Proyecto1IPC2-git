@@ -4,6 +4,11 @@
  */
 package AdministradorSucursal.Taller;
 
+import AdministradorSucursal.Bus;
+import AdministradorSucursal.BusJdbc;
+import AdministradorSucursal.Conector;
+import ValidarEntradas.Bus.validarBusLogica;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,12 +16,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
  * @author mario
  */
-@WebServlet(name = "validarTaller", urlPatterns = {"/validarTaller"})
+@WebServlet(name = "validarTaller", urlPatterns = {"/AdministradorSucursal/Taller/validarTaller"})
 public class validarTaller extends HttpServlet {
 
     /**
@@ -28,23 +34,6 @@ public class validarTaller extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet validarTaller</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet validarTaller at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -57,7 +46,12 @@ public class validarTaller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        tallerLogica logica = new tallerLogica();
+        request.setAttribute("buses", logica.buses(request));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Frontend/AdministradorSucursal/Taller/Taller.jsp");
+        dispatcher.forward(request, response);
+        
     }
 
     /**
@@ -71,7 +65,12 @@ public class validarTaller extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        tallerLogica logica = new tallerLogica();
+        request.setAttribute("buses", logica.buses(request));
+        request.setAttribute("resultado", logica.mantenimiento(request));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Frontend/AdministradorSucursal/Taller/Taller.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**
@@ -79,9 +78,4 @@ public class validarTaller extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

@@ -59,6 +59,29 @@ public class RutaJdbc {
         
     }
     
+    public Ruta buscarRuta(String nombreRuta){
+        Ruta ruta = null;
+          String sql = "SELECT * FROM ruta WHERE id_ruta = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, nombreRuta);
+            ResultSet resultado = statement.executeQuery();
+            while(resultado.next()){
+                String nombre = resultado.getString("id_ruta");
+                String idSucursalOrigen = resultado.getString("id_sucursal_origen");
+                String idSucursalDestino = resultado.getString("id_sucursal_destino");
+                double distanciaKm = resultado.getDouble("distancia_km");
+               ruta = new Ruta(nombre, idSucursalOrigen, idSucursalDestino, distanciaKm);
+                return ruta;
+            }
+            return ruta;
+        } catch (SQLException ex) {
+        return ruta;
+        }
+         
+          
+    }
+    
     public String eliminarRuta(String nombreRuta ,String idSucursalOrigen){
       
         String sql = "DELETE FROM ruta WHERE id_ruta = ? AND id_sucursal_origen = ?";

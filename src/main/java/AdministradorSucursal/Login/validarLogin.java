@@ -52,11 +52,18 @@ public class validarLogin extends HttpServlet {
             dispatcher.forward(request, response);
         } else {
             request.getSession().setAttribute("usuario", usuario);
-            if (usuario.getTipo().equalsIgnoreCase("CLIENTE") || usuario.getTipo().equalsIgnoreCase("ADMIN_SISTEMA")) {
+            if (usuario.getTipo().equalsIgnoreCase("CLIENTE")) {
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/Frontend/Cliente/Cliente/InicioUsuario.jsp");
                 dispatcher.forward(request, response);
-
+            }else if(usuario.getTipo().equalsIgnoreCase("ADMIN_SISTEMA")){
+                     
+                 
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Frontend/AdministradorSistema/Inicio.jsp");
+                dispatcher.forward(request, response);
+            
+            
+            
             } else {
 
                 ArrayList<Sucursal> sucursales = login.buscarSucursalesAsociadasAAdmi(usuario.getDpi());

@@ -14,6 +14,8 @@ public class Ruta {
     private String idSucursalOrigen;
     private String idSucursalDestino;
     private Double distanciaEnKm;
+    private Sucursal sucursalOrigen;
+    private Sucursal sucursalDestino;
 
     public Ruta(String nombreRutal, String idSucursalOrigen, String idSucursalDestino, Double distanciaEnKm) {
         this.nombreRutal = nombreRutal;
@@ -25,6 +27,22 @@ public class Ruta {
 
     public String getNombreRutal() {
         return nombreRutal;
+    }
+
+    public Sucursal getSucursalOrigen() {
+        return sucursalOrigen;
+    }
+
+    public void setSucursalOrigen(Sucursal sucursalOrigen) {
+        this.sucursalOrigen = sucursalOrigen;
+    }
+
+    public Sucursal getSucursalDestino() {
+        return sucursalDestino;
+    }
+
+    public void setSucursalDestino(Sucursal sucursalDestino) {
+        this.sucursalDestino = sucursalDestino;
     }
 
     public void setNombreRutal(String nombreRutal) {

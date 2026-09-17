@@ -17,12 +17,14 @@ public class ViajeObj {
     private String estado;
     private LocalDateTime  salida;
     private LocalDateTime llegada;
-    private double  precioBoleto;
+    private Double  precioBoleto;
     private String idChofer;
     private String idRuta;
     private String idViajeAlquiler;
     private int cantidadBoletosVendidos;
     private DetalleViaje detalle;
+    
+    private Ruta ruta;
 
     public ViajeObj(String idViaje, String tipo, String idBus, String estado, LocalDateTime salida, LocalDateTime llegada, double precioBoleto, String idChofer, String idRuta, String idViajeAlquiler) {
         this.idViaje = idViaje;
@@ -43,6 +45,14 @@ public class ViajeObj {
 
     public void setDetalle(DetalleViaje detalle) {
         this.detalle = detalle;
+    }
+
+    public Ruta getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(Ruta ruta) {
+        this.ruta = ruta;
     }
     
     

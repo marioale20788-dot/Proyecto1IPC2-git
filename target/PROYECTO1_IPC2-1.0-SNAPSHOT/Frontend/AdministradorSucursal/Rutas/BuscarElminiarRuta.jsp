@@ -45,7 +45,7 @@
                 </form>
 
 
-                <div id="mapa" style="height: 400px; width: 100%;" class="rounded-3 border shadow-sm"></div>
+                <div id="mapa" style="height: 400px; width: 100%;" class="rounded-3"></div>
                 <c:if test="${not empty sucursalOrigen and not empty sucursalesDestino and not empty rutas}">
 
                     <input type="hidden" id="iniciarRuta" value="true" />

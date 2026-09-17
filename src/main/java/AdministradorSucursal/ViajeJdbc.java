@@ -53,6 +53,44 @@ public class ViajeJdbc {
 
     }
 
+    public ArrayList<ViajeObj> obtenerTodosViajesRegulares() {
+        String sql = "SELECT * FROM viaje WHERE estado = 'ESPERA' AND tipo = 'REGULAR'";
+        ArrayList<ViajeObj> viajes = new ArrayList<>();
+        try {
+            PreparedStatement queryStatement = conn.prepareStatement(sql);
+            ResultSet resultado = queryStatement.executeQuery();
+            while (resultado.next()) {
+                ViajeObj viaje = viajeCiclo(resultado);
+                viajes.add(viaje);
+
+            }
+            return viajes;
+
+        } catch (SQLException ex) {
+            return viajes;
+        }
+
+    }
+
+    public ViajeObj viajeCiclo(ResultSet resultado) throws SQLException {
+        String viajeId = resultado.getString("id_viaje");
+        String tipo = resultado.getString("tipo");
+        String idBus = resultado.getString("id_bus");
+        String estado = resultado.getString("estado");
+        Timestamp salidat = resultado.getTimestamp("fecha_salida_programada");
+        LocalDateTime salida = salidat.toLocalDateTime();
+        Timestamp llegadat = resultado.getTimestamp("fecha_llegada_estimada");
+        LocalDateTime llegada = llegadat.toLocalDateTime();
+        double precio = resultado.getDouble("precio_boleto");
+        String idChofer = resultado.getString("id_chofer");
+        String idRuta = resultado.getString("id_ruta");
+        String idViajeAlquiler = resultado.getString("id_viaje_alquiler");
+
+        ViajeObj viaje = new ViajeObj(viajeId, tipo, idBus, estado, salida, llegada, precio, idChofer, idRuta, idViajeAlquiler);
+        return viaje;
+
+    }
+
     public int boletosVendidos(String idViaje) {
         String sql = "SELECT * FROM boletos WHERE id_viaje = ?";
         int vendidos = 0;
@@ -116,21 +154,42 @@ public class ViajeJdbc {
             queryStatement.setString(2, idSucursal);
             ResultSet resultado = queryStatement.executeQuery();
             while (resultado.next()) {
-                String viajeId = resultado.getString("id_viaje");
-                String tipo = resultado.getString("tipo");
-                String idBus = resultado.getString("id_bus");
-                String estado = resultado.getString("estado");
-                Timestamp salidat = resultado.getTimestamp("fecha_salida_programada");
-                LocalDateTime salida = salidat.toLocalDateTime();
-                Timestamp llegadat = resultado.getTimestamp("fecha_llegada_estimada");
-                LocalDateTime llegada = llegadat.toLocalDateTime();
-                double precio = resultado.getDouble("precio_boleto");
-                String idChofer = resultado.getString("id_chofer");
-                String idRuta = resultado.getString("id_ruta");
-                String idViajeAlquiler = resultado.getString("id_viaje_alquiler");
+                viaje = viajeCiclo(resultado);
+                return viaje;
 
-                viaje = new ViajeObj(viajeId, tipo, idBus, estado, salida, llegada, precio, idChofer, idRuta, idViajeAlquiler);
+            }
+            return viaje;
+        } catch (SQLException ex) {
+            return viaje;
+        }
 
+    }
+
+    public boolean obtenerEstadoViaje(String idViaje, String estado) {
+        String sql = "SELECT * FROM viaje WHERE id_viaje = ? AND estado = ?";
+        try {
+            PreparedStatement queryStatement = conn.prepareStatement(sql);
+            queryStatement.setString(1, idViaje);
+            queryStatement.setString(2, estado);
+            ResultSet resultado = queryStatement.executeQuery();
+            return resultado.next();
+        } catch (SQLException ex) {
+            return false;
+        }
+
+    }
+
+    public ViajeObj obtenerViajePorId(String idViaje) {
+        String sql = "SELECT * FROM viaje WHERE id_viaje = ?";
+
+        ViajeObj viaje = null;
+        try {
+            PreparedStatement queryStatement = conn.prepareStatement(sql);
+            queryStatement.setString(1, idViaje);
+            ResultSet resultado = queryStatement.executeQuery();
+            while (resultado.next()) {
+                viaje = viajeCiclo(resultado);
+                return viaje;
             }
             return viaje;
         } catch (SQLException ex) {
@@ -207,18 +266,9 @@ public class ViajeJdbc {
             while (resultado.next()) {
                 String viajeId = resultado.getString("id_viaje");
                 String tipo = resultado.getString("tipo");
-                String idBus = resultado.getString("id_bus");
                 String estado = resultado.getString("estado");
-                Timestamp salidat = resultado.getTimestamp("fecha_salida_programada");
-                LocalDateTime salida = salidat.toLocalDateTime();
-                Timestamp llegadat = resultado.getTimestamp("fecha_llegada_estimada");
-                LocalDateTime llegada = llegadat.toLocalDateTime();
-                double precio = resultado.getDouble("precio_boleto");
-                String idChofer = resultado.getString("id_chofer");
-                String idRuta = resultado.getString("id_ruta");
-                String idViajeAlquiler = resultado.getString("id_viaje_alquiler");
 
-                ViajeObj viaje = new ViajeObj(viajeId, tipo, idBus, estado, salida, llegada, precio, idChofer, idRuta, idViajeAlquiler);
+                ViajeObj viaje = viajeCiclo(resultado);
 
                 if (tipo.equalsIgnoreCase("REGULAR")) {
                     viaje.setCantidadBoletosVendidos(boletosVendidos(viajeId));
