@@ -24,7 +24,7 @@
 
                 <div class="card">
                     <div class="card-header bg-black text-white p-3">
-
+                        
                         CREAR NUEVO ADMINISTRADOR DE SUCURSAL
 
                     </div>
