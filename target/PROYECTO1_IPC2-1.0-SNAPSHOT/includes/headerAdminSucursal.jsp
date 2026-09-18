@@ -140,7 +140,16 @@
 
 
 
-                    <button id="administrarReportes" class="btn btn-dark w-100 mb-2" type="button" onclick="administrarReportes()">REPORTES</button>
+              
+                     
+                    <a id="verBus" href="${pageContext.request.contextPath}/Reportes/ObtenerBuses"" class="btn btn-dark w-100 mb-2">
+                        ver Buses
+
+                    </a>
+                         <a id="verChofer" href="${pageContext.request.contextPath}/Reportes/ObtenerChoferes"" class="btn btn-dark w-100 mb-2">
+                        ver choferes
+
+                    </a>
 
 
                 </c:if>
@@ -169,6 +178,10 @@
                     <a id="crearViaje" href="${pageContext.request.contextPath}/AdministradorSistema/Sucursales/AdministrarUsuarios" class="btn btn-dark w-100 mb-2">
                         Administrar clientes
                     </a>
+                         <a id="crearViaje" href="${pageContext.request.contextPath}/Frontend/AdministradorSistema/reportes/RutasReporte.jsp" class="btn btn-dark w-100 mb-2">
+                        Ver rutas
+                    </a>
+                        
 
 
 

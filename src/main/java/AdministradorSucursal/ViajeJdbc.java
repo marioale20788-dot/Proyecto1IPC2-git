@@ -52,6 +52,42 @@ public class ViajeJdbc {
         }
 
     }
+    public int buscarViajesHechos(String idBus){
+        String sql ="SELECT * FROM viaje WHERE id_bus = ? AND estado = 'FINALIZADO'";
+           int cont=0;
+        try {
+            PreparedStatement querStatement =  conn.prepareStatement(sql);
+            querStatement.setString(1, idBus);
+            ResultSet rseultado = querStatement.executeQuery();
+            
+            while(rseultado.next()){
+                cont++;
+            }
+            return cont;
+        } catch (SQLException ex) {
+           return cont;
+        }
+        
+        
+    }
+    public int buscarviajesHechosChofer(String id_chofer){
+            String sql ="SELECT * FROM viaje WHERE id_chofer = ? AND estado = 'FINALIZADO'";
+           int cont=0;
+        try {
+            PreparedStatement querStatement =  conn.prepareStatement(sql);
+            querStatement.setString(1, id_chofer);
+            ResultSet rseultado = querStatement.executeQuery();
+            
+            while(rseultado.next()){
+                cont++;
+            }
+            return cont;
+        } catch (SQLException ex) {
+           return cont;
+        }
+        
+    }
+
 
     public ArrayList<ViajeObj> obtenerTodosViajesRegulares() {
         String sql = "SELECT * FROM viaje WHERE estado = 'ESPERA' AND tipo = 'REGULAR'";

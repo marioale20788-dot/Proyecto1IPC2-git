@@ -7,6 +7,7 @@ var click = true;
 var click2=true;
 var click3=true;
 var click4=true;
+var click5=true;
 
 function adminsitrarBuses(){
     if(click){
@@ -79,6 +80,12 @@ function adminsitrarTaller(){
     
 }
 function adminsitrarReportes(){
+    
+   
+    
+    
+    
+    
     
 } 
 document.addEventListener("DOMContentLoaded", function() {

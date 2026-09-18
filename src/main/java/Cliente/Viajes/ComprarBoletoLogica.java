@@ -16,7 +16,9 @@ import Cliente.BoletosJdbc;
 import Cliente.BusViaje;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 
 /**
  *
@@ -47,56 +49,59 @@ public class ComprarBoletoLogica {
 
     }
 
-    public String commprarBoleto(HttpServletRequest request) {
-        BoletosJdbc boletoDb = new BoletosJdbc(Conector.getInstance().getConnection());
-        String idviaje = request.getParameter("idViaje");
-        String boletosCom = request.getParameter("boletosComprados");
-        String[] boletosComprados = boletosCom.split(",");
-        Usuario usuarioCompra = (Usuario) request.getSession().getAttribute("usuario");
-
-        Date fechaCompra = null;
-        boolean datosCorrectos = true;
-        String error = "";
-        String resultado = "NO SE PUDO REALIZAR LA COMPRA, CREDITOS INSUFICIENTES";
-        int cont = 0;
+    public String comprarBoleto(HttpServletRequest request) {
+        Connection conn = null;
         try {
-            fechaCompra = Date.valueOf(request.getParameter("fechaCompra"));
+            Date fechaCompra = Date.valueOf(request.getParameter("fechaCompra"));
+            String idviaje = request.getParameter("idViaje");
+            String[] boletosComprados = request.getParameter("boletosComprados").split(",");
+            Usuario usuarioCompra = (Usuario) request.getSession().getAttribute("usuario");
 
-        } catch (IllegalArgumentException | NullPointerException e) {
-            error = " FORMATO DE ENTRADA INCORRECTO";
-            datosCorrectos = false;
+            conn = Conector.getInstance().getConnection();
+            conn.setAutoCommit(false);
+            BoletosJdbc boletoDb = new BoletosJdbc(conn);
+            int cont = 0;
 
-        }
-        if (datosCorrectos == true) {
+            for (String boleto : boletosComprados) {
+                int numero = Integer.parseInt(boleto.trim());
 
-            for (String boletosComprado : boletosComprados) {
-                try {
-                    int numero = Integer.valueOf(boletosComprado);
-                    Boleto boleto = new Boleto(usuarioCompra.getDpi(), idviaje, fechaCompra, numero, null);
-                    if (boletoDb.asientoOcupado(idviaje, numero) == false) {
-
-                        if (validarPrecio(request, boletoDb, usuarioCompra) == true) {
-                            cont++;
-                            boletoDb.comprarBoleto(boleto);
-
-                            resultado = cont + " BOLETOS COMPRADOS";
-                        }
-                    }else{
-                     resultado = " ASIENTO OCUPADO";   
-                    }
-
-                } catch (NumberFormatException e) {
-                    return "NO SE PUDO REALIZAR ESTA ACCION ";
+                if (boletoDb.asientoOcupado(idviaje, numero)) {
+                    conn.rollback();
+                    return "Asiento ocupado, se cancelo la compra.";
                 }
 
+                if (!validarPrecio(request, boletoDb, usuarioCompra)) {
+                    conn.rollback();
+                    return "creditos insuficientes,se cancelo la compra.";
+                }
+
+                boletoDb.comprarBoleto(new Boleto(usuarioCompra.getDpi(), idviaje, fechaCompra, numero, null));
+                cont++;
             }
 
-            return resultado;
+            conn.commit();
+            return cont + " BOLETOS COMPRADOS";
 
-        } else {
-            return error;
+        } catch (IllegalArgumentException e) {
+            return "FORMATO DE ENTRADA INCORRECTO";
+        } catch (Exception e) {
+            if (conn != null) {
+            try { 
+                conn.rollback(); 
+            } catch (SQLException ex) {
+            }
         }
+            return "NO SE PUDO REALIZAR LA COMPRA";
+        } finally {
+            try {
+                if(conn!=null){
+                     conn.setAutoCommit(true);
+                }
+               
+            } catch (SQLException e) {
+            }
 
+        }
     }
 
     public boolean validarPrecio(HttpServletRequest request, BoletosJdbc boletoDb, Usuario us) {

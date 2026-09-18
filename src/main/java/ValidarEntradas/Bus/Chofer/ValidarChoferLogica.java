@@ -87,6 +87,14 @@ public class ValidarChoferLogica {
 
     }
 
+    public ArrayList<Chofer> buscarChoferesReportes(HttpServletRequest request) {
+        String idSucursal = (String) request.getSession().getAttribute("idSucursal");
+        ArrayList<Chofer> choferes = new ArrayList<>();
+        ChoferJdbc choferJdbc = new ChoferJdbc(Conector.getInstance().getConnection(), null);
+        choferes = choferJdbc.buscarChoferes(null, idSucursal);
+        return choferes;
+    }
+
     public Chofer buscarChoferEditar(HttpServletRequest request) {
 
         ChoferJdbc choferJdbc = new ChoferJdbc(Conector.getInstance().getConnection(), null);

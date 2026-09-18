@@ -20,7 +20,7 @@ public class Bus {
     private int capacidadPasajeros;
     private boolean estado;
     private String idSucursalAsociada;
-    
+    private int viajes;
   
 
     public Bus(String numeroPlaca, String modelo, String marca, String foto, int fechaDeFabricacion, Double kilometrajeActual, int capacidadPasajeros, boolean estado, String idSucursalAsociada) {
@@ -37,6 +37,14 @@ public class Bus {
 
     public String getNumeroPlaca() {
         return numeroPlaca;
+    }
+
+    public int getViajes() {
+        return viajes;
+    }
+
+    public void setViajes(int viajes) {
+        this.viajes = viajes;
     }
 
     public void setNumeroPlaca(String numeroPlaca) {

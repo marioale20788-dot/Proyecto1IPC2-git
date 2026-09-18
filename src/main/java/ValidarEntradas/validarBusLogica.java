@@ -7,6 +7,7 @@ package ValidarEntradas;
 import AdministradorSucursal.Bus;
 import AdministradorSucursal.BusJdbc;
 import AdministradorSucursal.Conector;
+import AdministradorSucursal.ViajeJdbc;
 import jakarta.servlet.http.HttpServletRequest;
 import java.net.http.HttpRequest;
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class validarBusLogica {
     public ArrayList<Bus> buscarBus(HttpServletRequest request) {
         String numeroPlaca = request.getParameter("inputNumeroPlaca");
         String idSucursal = request.getParameter("inputIdSucursal");
+        
 
         if (numeroPlaca != null && idSucursal != null) {
 
@@ -82,6 +84,15 @@ public class validarBusLogica {
 
         }
         return null;
+    }
+    public ArrayList<Bus> buscarBusReporte(HttpServletRequest request) {
+        BusJdbc busesDb =new BusJdbc(Conector.getInstance().getConnection(), null);
+        String idScursal = (String)request.getSession().getAttribute("idSucursal");
+        
+        ArrayList<Bus> buses  = busesDb.BuscarBuses(idScursal, null);
+        
+        return buses;
+        
     }
 
     public Bus buscarBusEditar(HttpServletRequest request) {

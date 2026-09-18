@@ -8,6 +8,7 @@ ValidarEntradas/Bus/validarBusLogica.class
 AdministradorSucursal/Login/Login.class
 AdministradorSucursal/Viajes/AlquilerPrivadoLogica.class
 AdministradorSucursal/Taller/tallerLogica.class
+Reportes/ObtenerChoferes.class
 Cliente/Viajes/ClienteVerViajes.class
 AdministradorSucursal/Leaflet/BuscarRutas.class
 ValidarEntradas/Bus/validarBus.class
@@ -21,6 +22,9 @@ AdministradorSucursal/Viajes/ViajeLogica.class
 Cliente/Viajes/ComprarBoletoLogica.class
 Cliente/Viajes/SolicitarViajePrivado.class
 Cliente/Boleto.class
+ValidarEntradas/validarBusEdtiarBus.class
+Reportes/RutasReporte.class
+ValidarEntradas/validarBusLogica.class
 AdministradorSucursal/DetalleViajeJdbc.class
 AdmnistrarSistema/sucursales/validarSucursal.class
 ValidarEntradas/Bus/Chofer/ValidarChoferLogica.class
@@ -45,11 +49,14 @@ AdministradorSucursal/Leaflet/MostarRutas.class
 AdministradorSucursal/TallerObj.class
 AdministradorSucursal/Chofer.class
 ValidarEntradas/Bus/Chofer/valdarChoferEditarChofer.class
+ValidarEntradas/validarBus.class
 Cliente/BoletosJdbc.class
 AdministradorSucursal/Viajes/AlquilerPrivado.class
 AdministradorSucursal/SucursalJdbc.class
+Reportes/ObtenerBuses.class
 AdmnistrarSistema/sucursales/AdministrarSucursal.class
 AdministradorSucursal/DetalleViaje.class
+Reportes/buscarRutas.class
 Cliente/InicioCliente.class
 Cliente/Viajes/ComprarBoleto.class
 AdministradorSucursal/TallerJdbc.class

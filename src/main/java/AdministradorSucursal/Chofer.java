@@ -20,6 +20,7 @@ public class Chofer {
     private double salarioBase;
     private String idSucursal;
     private Date fechaVencimiento;
+    private int viajes;
 
     public Chofer(String nombreCompleto, String numeroDeTelefono, String numeroDeLicencia, String foto, String tipoLicencial, boolean estadoOpertaivo, double salarioBase, String idSucursal,Date fecha) {
         this.nombreCompleto = nombreCompleto;
@@ -31,6 +32,14 @@ public class Chofer {
         this.salarioBase = salarioBase;
         this.idSucursal = idSucursal;
         this.fechaVencimiento=fecha;
+    }
+
+    public int getViajes() {
+        return viajes;
+    }
+
+    public void setViajes(int viajes) {
+        this.viajes = viajes;
     }
 
     public Date getFechaVencimiento() {

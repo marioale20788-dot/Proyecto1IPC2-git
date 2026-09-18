@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Cliente.Viajes;
+package Reportes;
 
-import AdministradorSucursal.ViajeObj;
-import Cliente.BusViaje;
+import AdministradorSucursal.Bus;
+import ValidarEntradas.validarBusLogica;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,13 +14,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
  * @author mario
  */
-@WebServlet(name = "ComprarBoleto", urlPatterns = {"/AdministradorSucusal/Cliente/ComprarBoleto"})
-public class ComprarBoleto extends HttpServlet {
+@WebServlet(name = "ObtenerBuses", urlPatterns = {"/Reportes/ObtenerBuses"})
+public class ObtenerBuses extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,6 +32,7 @@ public class ComprarBoleto extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+   
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -43,11 +45,13 @@ public class ComprarBoleto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        comprarBoleto(request);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Frontend/Cliente/ComprarBoleto/ComprarBoleto.jsp");
+        
+        validarBusLogica logica = new validarBusLogica();
+        ArrayList<Bus>buses = new ArrayList<>();
+        buses = logica.buscarBusReporte(request);
+        request.setAttribute("buses", buses);
+         RequestDispatcher dispatcher = request.getRequestDispatcher("/Frontend/AdministradorSucursal/Reporte/ListaDeBuses.jsp");
         dispatcher.forward(request, response);
-
     }
 
     /**
@@ -61,24 +65,7 @@ public class ComprarBoleto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ComprarBoletoLogica comprarBoleto = new ComprarBoletoLogica();
-        String resultado = comprarBoleto.comprarBoleto(request);
-        request.setAttribute("resultado", resultado);
-
-        comprarBoleto(request);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Frontend/Cliente/ComprarBoleto/ComprarBoleto.jsp");
-        dispatcher.forward(request, response);
-
-    }
-
-    public void comprarBoleto(HttpServletRequest request) {
-        ComprarBoletoLogica comprarBoleto = new ComprarBoletoLogica();
-        ViajeObj viaje = comprarBoleto.obtenerViaje(request);
-        BusViaje busAsientos = comprarBoleto.obtenerBusViaje(request, viaje);
-        request.setAttribute("viaje", viaje);
-        request.setAttribute("busViaje", busAsientos);
-
+      
     }
 
     /**

@@ -31,8 +31,6 @@ public class validarBus extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -45,23 +43,20 @@ public class validarBus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-           validarBusLogica logica = new validarBusLogica();
+
+        validarBusLogica logica = new validarBusLogica();
         ArrayList<Bus> buses = logica.buscarBus(request);
-       if(buses==null ||buses.isEmpty()){
-        
-           request.setAttribute("error", "no se encontro ningun resultado");
-       }else{
-           request.setAttribute("buses", buses);
-       }
+        if (buses == null || buses.isEmpty()) {
+
+            request.setAttribute("error", "no se encontro ningun resultado");
+        } else {
+            request.setAttribute("buses", buses);
+        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Frontend/AdministradorSucursal/Buses/editarBus.jsp");
-dispatcher.forward(request, response);
-        
-        
-        
+        dispatcher.forward(request, response);
+
     }
-      
-    
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -73,15 +68,12 @@ dispatcher.forward(request, response);
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         validarBusLogica logica  = new validarBusLogica();
-          String resultado = logica.crearBusEnBaseDeDatos(request);
-          request.setAttribute("resultado", resultado);       
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Frontend/AdministradorSucursal/Buses/CrearBus.jsp"); 
+        validarBusLogica logica = new validarBusLogica();
+        String resultado = logica.crearBusEnBaseDeDatos(request);
+        request.setAttribute("resultado", resultado);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Frontend/AdministradorSucursal/Buses/CrearBus.jsp");
         dispatcher.forward(request, response);
-        
-     
+
     }
 
-    
- 
 }

@@ -48,9 +48,10 @@ public class BusJdbc {
         }
 
     }
-
+    
     public ArrayList<Bus> BuscarBuses(String idSucursal, String placa) {
         String sql = "SELECT * FROM buses WHERE id_sucursal = ?";
+        ViajeJdbc viaje = new ViajeJdbc(connection);
         if (placa != null) {
             sql = sql + " AND numero_placa = ?";
         }
@@ -73,8 +74,11 @@ public class BusJdbc {
                 double kmActual = busesBuscados.getDouble("kilometraje_actual");
                 int capacidadPasajeros = busesBuscados.getInt("capacidad_pasajeros");
                 boolean estado = busesBuscados.getBoolean("estado_operativo");
+                int vaijesHechos = viaje.buscarViajesHechos(numeroPlaca);
                 Bus bus = new Bus(numeroPlaca, modelo, marca, foto, fabricacion, kmActual, capacidadPasajeros, estado, idSucursal);
+                bus.setViajes(vaijesHechos);
                 buses.add(bus);
+                
 
             }
             return buses;

@@ -53,6 +53,7 @@ public class ChoferJdbc {
     }
 
     public ArrayList<Chofer> buscarChoferes(String idChofer, String idSucursal) {
+         ViajeJdbc viajeDb = new ViajeJdbc(conn);
         String sql = "SELECT * FROM chofer WHERE id_sucursal = ?";
         if (idChofer != null) {
             sql = sql + " AND numero_licencia = ?";
@@ -76,6 +77,7 @@ public class ChoferJdbc {
                 Date fechaVencimiento = chofersBuscados.getDate("fecha_vencimiento_licencia");
                 boolean estadoOperativo = chofersBuscados.getBoolean("estado_operativo");
                 Chofer chofer = new Chofer(nombreCompleto, numeroTelefono, numeroLicencia, foto, tipoLicencia, estadoOperativo, salarioBase, idSucursal, fechaVencimiento);
+                chofer.setViajes(viajeDb.buscarviajesHechosChofer(numeroLicencia));
                 choferes.add(chofer);
 
             }

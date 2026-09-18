@@ -25,9 +25,15 @@ public class BuscarRutas {
         return sucursal;
 
     }
+    public Sucursal sucursalOrigenReprte(HttpServletRequest request){
+        String idSucursalOrigen =request.getParameter("idSucursalOrigen");
+        SucursalJdbc sucursalBaseDeDatos = new SucursalJdbc(Conector.getInstance().getConnection());
+        Sucursal sucursal = sucursalBaseDeDatos.buscarSucursalPorId(idSucursalOrigen);
+        return sucursal;
+        
+    }
 
-    public ArrayList<Sucursal> sucursalesDestino(HttpServletRequest request, ArrayList<Ruta> rutas) {
-        String idSucursalOrigen = (String) request.getSession().getAttribute("idSucursal");
+    public ArrayList<Sucursal> sucursalesDestino(HttpServletRequest request, ArrayList<Ruta> rutas) {;
         SucursalJdbc sucursalBaseDeDatos = new SucursalJdbc(Conector.getInstance().getConnection());
 
         ArrayList<Sucursal> sucursales = sucursalBaseDeDatos.buscarSucursalesDestinoRutas(rutas);
@@ -51,6 +57,16 @@ public class BuscarRutas {
             rutas = rutaBaseDeDatos.BuscarRutas(idSucursalOrigen, null);
         }
 
+        return rutas;
+
+    }
+      public ArrayList<Ruta> buscarRutasReporte(String idSucursal) {
+   
+        RutaJdbc rutaBaseDeDatos = new RutaJdbc(Conector.getInstance().getConnection());
+        ArrayList<Ruta> rutas = new ArrayList<>();
+   
+                rutas = rutaBaseDeDatos.BuscarRutas(idSucursal, null);
+            
         return rutas;
 
     }
